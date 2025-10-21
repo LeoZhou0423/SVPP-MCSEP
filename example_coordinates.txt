@@ -1,0 +1,23 @@
+# Example Coordinate File for HOAMRP Planner
+#
+# This file demonstrates how to organize start points, waypoints, and end points
+# in a single file using section markers.
+
+# START_POINTS section - defines possible starting locations
+# START_POINTS
+0, 0, 0       # Default start point
+10, 15, 5     # Alternative start point 1
+20, 5, 10     # Alternative start point 2
+
+# WAYPOINTS section - defines intermediate points that must be visited
+# WAYPOINTS
+30, 30, 20    # Waypoint 1
+40, 45, 25    # Waypoint 2
+50, 35, 15    # Waypoint 3
+60, 50, 30    # Waypoint 4
+
+# END_POINTS section - defines possible ending locations
+# END_POINTS
+80, 70, 40    # End point 1
+90, 80, 45    # End point 2
+100, 100, 50  # Default end point
