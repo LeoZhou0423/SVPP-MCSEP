@@ -1,5 +1,3 @@
-您指出的问题非常准确！以下是修改后的完整数学建模文档：
-
 # Mathematical Model for Single Vehicle Path Planning with Multiple Candidate Start/End Points
 
 ## Problem Definition
@@ -204,5 +202,6 @@ For $n \leq 12$, we employ complete enumeration:
 - **Completeness**: The algorithm always returns a feasible solution satisfying all constraints
 
 ## Conclusion
+
 
 This mathematical model provides a rigorous foundation for the single vehicle path planning problem with multiple candidate start/end points. The hybrid optimization strategy effectively balances solution quality and computational efficiency, making it suitable for both small-scale exact solutions and large-scale practical applications.
