@@ -61,11 +61,13 @@ A sample file `example_coordinates.txt` is included in the repository.
 
 4. The program will display the imported/generated coordinates and compute the optimal route
 
-## Algorithm Details
+## Features
 
 - **Multiple algorithm options**: Exact solution for small problems (≤ 8 waypoints), simulated annealing with 2-opt local search for medium problems, and clustering + ALNS approach for large problems (≥ 50 waypoints)
 - **Optimization techniques**: Vectorized distance calculations, KD-Tree spatial indexing, and distance caching for improved performance
 - **Simulated annealing parameters**: Fixed parameters (T₀ = 5000, α = 0.998) as specified in the paper
+- **Parallel processing**: Implements parallel solution for multiple start-end combinations using multiprocessing, activated when more than 2 combinations exist
+- **ALNS adaptive destroy rate**: Strictly implements the formula ρ(t) = ρ_min + (ρ_max - ρ_min)·(1 - t/T_max) as specified in the paper
 - **Greedy Construction**: Builds an initial path by always selecting the nearest unvisited point
 - **2-opt Local Search**: Further optimizes the path by reversing segments
 - **Distance Caching**: Optimizes performance by caching calculated distances
@@ -78,7 +80,7 @@ A sample file `example_coordinates.txt` is included in the repository.
 
 To install the required dependencies, run:
 ```
-pip install numpy matplotlib
+pip install -r requirements.txt
 ```
 
 ## Example Workflow for Reproducibility
