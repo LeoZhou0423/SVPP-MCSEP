@@ -768,12 +768,13 @@ def generate_random_coordinates_3d(count: int,
 def import_coordinates_from_file(file_path: str) -> Tuple[List[Coordinate3D], List[Coordinate3D], List[Coordinate3D]]:
     """Import 3D coordinates from a single file using section markers
     
-    The file should use comment markers to separate different types of points:
+    The file must contain sections marked by special comments:
     - # START_POINTS: Start points section
     - # WAYPOINTS: Waypoints section  
     - # END_POINTS: End points section
     
     Coordinates should be in x, y, z format, separated by commas, spaces, or tabs.
+    All three sections must be present in the file.
     """
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"文件未找到: {file_path}")
@@ -782,8 +783,9 @@ def import_coordinates_from_file(file_path: str) -> Tuple[List[Coordinate3D], Li
     waypoints = []
     end_points = []
     
-    # Default to START_POINTS if no section markers found
-    current_section = "START_POINTS"
+    # Track which sections have been found
+    sections_found = {"START_POINTS": False, "WAYPOINTS": False, "END_POINTS": False}
+    current_section = None
     
     with open(file_path, 'r', encoding='utf-8') as f:
         for line_idx, line in enumerate(f, 1):
@@ -792,17 +794,24 @@ def import_coordinates_from_file(file_path: str) -> Tuple[List[Coordinate3D], Li
             # Check for section markers
             if line.upper() == "# START_POINTS":
                 current_section = "START_POINTS"
+                sections_found[current_section] = True
                 continue
             elif line.upper() == "# WAYPOINTS":
                 current_section = "WAYPOINTS"
+                sections_found[current_section] = True
                 continue
             elif line.upper() == "# END_POINTS":
                 current_section = "END_POINTS"
+                sections_found[current_section] = True
                 continue
             
             # Skip other comments and empty lines
             if not line or line.startswith('#'):
                 continue
+            
+            # Check if we're in a valid section
+            if current_section is None:
+                raise ValueError(f"第{line_idx}行包含坐标但未找到有效的分段标记。请确保文件包含# START_POINTS、# WAYPOINTS和# END_POINTS标记。")
             
             # Try different delimiters (comma, space, tab)
             valid_coordinate = False
@@ -836,14 +845,17 @@ def import_coordinates_from_file(file_path: str) -> Tuple[List[Coordinate3D], Li
                 # If no valid delimiter found
                 raise ValueError(f"第{line_idx}行坐标格式无效: {line}")
     
+    # Verify all required sections were found
+    if not all(sections_found.values()):
+        missing_sections = [f"#{section}" for section, found in sections_found.items() if not found]
+        raise ValueError(f"缺少必需的分段标记: {', '.join(missing_sections)}。请明确定义所有点类型。")
+    
     # Verify at least one start and one end point
     if not start_points:
-        start_points = [Coordinate3D(0, 0, 0)]  # 默认起点
-        print("Warning: No start points found, using default (0, 0, 0)")
+        raise ValueError("在START_POINTS部分未找到有效的起始点坐标。")
     
     if not end_points:
-        end_points = [Coordinate3D(100, 100, 50)]  # 默认终点
-        print("Warning: No end points found, using default (100, 100, 50)")
+        raise ValueError("在END_POINTS部分未找到有效的终点坐标。")
     
     return start_points, waypoints, end_points
 
