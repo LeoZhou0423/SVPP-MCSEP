@@ -40,7 +40,7 @@ A sample file `example_coordinates.txt` is included in the repository.
 
 1. Run the program:
    ```
-   python HOAMRP_Planner.py
+   python SVPP_MCSEP_Planner.py
    ```
 
 2. Choose the data input method:
