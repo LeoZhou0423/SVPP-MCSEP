@@ -1,8 +1,8 @@
-# Fast 3D Path Planner with Multiple Candidate Start/End Points
+# Single Vehicle Path Planning with Multiple Candidate Start/End Points
 
 ## Overview
 
-**FastRoutePlanner3D** is an optimized Python implementation for solving 3D path planning problems with multiple candidate start and end points. This hybrid algorithm combines simulated annealing, adaptive large neighborhood search (ALNS), spatial indexing, and intelligent clustering to efficiently compute near-optimal routes through 3D waypoints.
+**SVPP_MCSEP_Planner** is an optimized Python implementation for solving 3D path planning problems with multiple candidate start and end points. This hybrid algorithm combines simulated annealing, adaptive large neighborhood search (ALNS), spatial indexing, and intelligent clustering to efficiently compute near-optimal routes through 3D waypoints.
 
 ## Key Features
 
